@@ -125,9 +125,3 @@ Roles	Different interfaces for drivers and users
 
 
 
-
-Access Control-
-
-Username- Avanthi.StudentTransportSystem
-mail id- limir61296@firain.com
-password- 6vngagkh)hz%9LL
