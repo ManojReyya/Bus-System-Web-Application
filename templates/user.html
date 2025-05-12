@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗺️ Bus Tracker | User View</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #dc2626;
+      --primary-dark: #991b1b;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 30px 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZGMyNjI2Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMDUiIHN0cm9rZS13aWR0aD0iMiI+PC9wYXRoPgo8cGF0aCBkPSJNMjggMEwyOCAzNEw1NiA1MEw1NiAxNkwyOCAwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utb3BhY2l0eT0iMC4wNSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==');
+      opacity: 0.1;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin: 0;
+      position: relative;
+    }
+    .controls {
+      text-align: center;
+      margin: 30px 20px;
+      position: relative;
+    }
+    .controls::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 3px;
+    }
+    select {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #e0e0e0;
+      background-color: white;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      min-width: 200px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23dc2626' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 12px) center;
+      padding-right: 40px;
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+    }
+    .map-container {
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 500px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 3px solid white;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+      background-color: white;
+      margin-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    .info {
+      margin-top: 15px;
+      text-align: center;
+      font-style: italic;
+      color: #555;
+      background-color: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: inline-block;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .info span {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .back-link {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .back-link:hover {
+      transform: translateX(-5px);
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      height: 40px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/trackingsystem" class="back-link">
+      <i class="fas fa-arrow-left mr-2"></i> Back
+    </a>
+    <img src="https://aietta.ac.in/images/Avanthi_autonomous.jpg" alt="Avanthi Logo" class="logo">
+    <h1><i class="fas fa-map-marker-alt"></i> Bus Tracker</h1>
+    <p>Select a bus to view its live location</p>
+  </header>
+
+  <div class="controls">
+    <label for="bus-select"><strong>Choose Bus:</strong></label>
+    <select id="bus-select" onchange="changeBus()">
+      <option value="" disabled selected>Select a bus</option>
+      <option value="Bus01">Bus 01</option>
+      <option value="Bus02">Bus 02</option>
+      <option value="Bus03">Bus 03</option>
+      <option value="Bus04">Bus 04</option>
+      <option value="Bus05">Bus 05</option>
+      <option value="Bus06">Bus 06</option>
+      <option value="Bus07">Bus 07</option>
+      <option value="Bus08">Bus 08</option>
+      <option value="Bus09">Bus 09</option>
+      <option value="Bus10">Bus 10</option>
+      <option value="Bus11">Bus 11</option>
+      <option value="Bus12">Bus 12</option>
+      <option value="Bus13">Bus 13</option>
+      <option value="Bus14">Bus 14</option>
+      <option value="Bus15">Bus 15</option>
+      <option value="Bus16">Bus 16</option>
+    </select>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+    <div class="info">
+      <i class="fas fa-clock mr-2"></i> Last updated: <span id="last-updated">-</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Avanthi Live Bus Tracking App &copy; 2024</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    let map = L.map('map').setView([17.385044, 78.486671], 13); // Default location
+    let marker = L.marker([0, 0]).addTo(map);
+    let selectedBus = null;
+    let busIcon = L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/3448/3448339.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+      popupAnchor: [0, -16]
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    function updateLocation() {
+      if (!selectedBus) return;
+
+      fetch(`/get_location/${selectedBus}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.lat && data.lon) {
+            const newLatLng = [data.lat, data.lon];
+            marker.setLatLng(newLatLng)
+                  .setIcon(busIcon)
+                  .bindPopup(`<b>${selectedBus}</b><br>Speed: ${data.speed || 'N/A'}<br>Updated: ${new Date(data.timestamp).toLocaleTimeString()}`)
+                  .openPopup();
+            map.setView(newLatLng, 15);
+            document.getElementById('last-updated').textContent = new Date(data.timestamp).toLocaleTimeString();
+          } else {
+            document.getElementById('last-updated').textContent = 'Location not available';
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching location:', err);
+          document.getElementById('last-updated').textContent = 'Error fetching data';
+        });
+    }
+
+    function changeBus() {
+      selectedBus = document.getElementById('bus-select').value;
+      document.getElementById('last-updated').textContent = 'Loading...';
+      updateLocation(); // Initial call
+    }
+
+    setInterval(updateLocation, 5000); // Refresh every 5 seconds
+  </script>
+</body>
+</html>

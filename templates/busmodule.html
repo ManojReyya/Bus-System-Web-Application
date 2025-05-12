@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Student Transport System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+    }
+    .btn-primary {
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+    }
+    .btn-secondary {
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+    }
+    .btn-secondary:hover {
+      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-white min-h-screen font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="https://aietta.ac.in/images/Avanthi_autonomous.jpg" alt="Avanthi Logo" class="h-12 sm:h-16 md:h-20 rounded shadow-md" />
+        <span class="text-2xl sm:text-3xl font-bold text-red-600">Student Transport System</span>
+      </div>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="/" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out border-b-2 border-transparent hover:border-red-600 px-2 py-1">Home</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center justify-center px-4 py-20">
+    <h1 class="text-4xl font-bold text-red-600 text-center mb-12 relative">
+      Welcome to the Student Transport Portal
+      <span class="block h-1 w-32 bg-red-600 mx-auto mt-4"></span>
+    </h1>
+
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
+      <!-- Transport System Button -->
+      <a href="/transportsystem"
+         class="card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl border-t-4 border-red-600 text-center w-64">
+        <div class="text-5xl mb-4 text-red-600">🚍</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Transport System</h3>
+        <p class="text-gray-600 mb-4">Manage student transportation details</p>
+        <div class="btn-primary text-white text-lg font-semibold py-3 px-6 rounded-xl shadow-md w-full">
+          Access Now
+        </div>
+      </a>
+
+      <!-- Tracking System Button -->
+      <a href="/trackingsystem"
+         class="card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl border-t-4 border-red-600 text-center w-64">
+        <div class="text-5xl mb-4 text-red-600">📍</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Tracking System</h3>
+        <p class="text-gray-600 mb-4">Track buses in real-time</p>
+        <div class="btn-secondary text-white text-lg font-semibold py-3 px-6 rounded-xl shadow-md w-full">
+          Access Now
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="text-center py-6 text-gray-500 text-sm">
+    <p>© 2024 Avanthi Student Transport System. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Tracking System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    }
+    .role-btn {
+      transition: all 0.3s ease;
+    }
+    .role-btn:hover {
+      transform: translateY(-5px);
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-white flex items-center justify-center min-h-screen p-4">
+  <div class="card p-10 rounded-2xl shadow-xl text-center w-full max-w-md border-t-4 border-red-600">
+    <div class="mb-2">
+      <img src="https://aietta.ac.in/images/Avanthi_autonomous.jpg" alt="Avanthi Logo" class="h-16 mx-auto mb-4">
+    </div>
+    <h1 class="text-3xl font-bold mb-2 text-red-600">Bus Tracking System</h1>
+    <div class="h-1 w-20 bg-red-600 mx-auto mb-6"></div>
+    <p class="mb-8 text-gray-600">Choose your role to continue</p>
+
+    <div class="space-y-6">
+      <a href="/driver" class="block">
+        <button class="role-btn w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-xl shadow-lg hover:shadow-xl flex items-center justify-center space-x-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+          <span class="font-semibold text-lg">Driver - Share Location</span>
+        </button>
+      </a>
+
+      <a href="/user" class="block">
+        <button class="role-btn w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-xl shadow-lg hover:shadow-xl flex items-center justify-center space-x-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="font-semibold text-lg">User - Track Bus</span>
+        </button>
+      </a>
+    </div>
+    
+    <div class="mt-10 text-sm text-gray-500">
+      <a href="/" class="text-red-600 hover:underline">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        }
+        .chart-card {
+            transition: all 0.3s ease;
+            border-top: 4px solid #dc2626;
+        }
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+            transform: translateY(-2px);
+        }
+        .table-row {
+            transition: all 0.2s ease;
+        }
+        .table-row:hover {
+            background-color: #fee2e2;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #dc2626;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-white font-sans text-gray-800 min-h-screen p-6">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header with Back Button -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-red-600 mb-2">Transportation Analysis</h1>
+                <p class="text-gray-600">Comprehensive overview of student transportation data</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <a href="/transportsystem">
+                    <button class="btn-primary text-white py-2 px-6 rounded-lg transition-all flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Back to Student List
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Row for Pie Chart and Bar Chart side by side -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+            <!-- Pie Chart for Student Type Distribution -->
+            <div class="chart-card p-6 rounded-xl shadow-lg bg-white">
+                <h2 class="text-xl font-semibold text-red-600 mb-4 section-title">Student Type Distribution</h2>
+                <div class="mt-6">
+                    <img src="data:image/png;base64,{{ plot_url_pie }}" alt="Student Type Pie Chart" class="w-full mt-4 rounded-lg">
+                </div>
+            </div>
+
+            <!-- Bar Chart for Bus Assignments -->
+            <div class="chart-card p-6 rounded-xl shadow-lg bg-white">
+                <h2 class="text-xl font-semibold text-red-600 mb-4 section-title">Students per Bus</h2>
+                <div class="mt-6">
+                    <img src="data:image/png;base64,{{ plot_url_bar }}" alt="Students per Bus Bar Chart" class="w-full mt-4 rounded-lg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Bus Assignment Data -->
+        <div class="chart-card p-6 rounded-xl shadow-lg bg-white mb-10">
+            <h2 class="text-xl font-semibold text-red-600 mb-6 section-title">Detailed Bus Assignment Data</h2>
+            <div class="overflow-x-auto mt-6">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-red-600 to-red-700 text-white">
+                            <th class="py-3 px-6 text-left">Bus Number</th>
+                            <th class="py-3 px-6 text-left">Number of Students</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bus in bus_assignments %}
+                        <tr class="border-t table-row">
+                            <td class="py-3 px-6">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                    <span class="font-medium">{{ bus[0] }}</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-6">
+                                <span class="px-3 py-1 rounded-full bg-red-100 text-red-800 text-sm font-medium">
+                                    {{ bus[1] }} students
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Detailed Pickup Point Data -->
+        <div class="chart-card p-6 rounded-xl shadow-lg bg-white">
+            <h2 class="text-xl font-semibold text-red-600 mb-6 section-title">Detailed Pickup Point Data</h2>
+            <div class="overflow-x-auto mt-6">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-red-600 to-red-700 text-white">
+                            <th class="py-3 px-6 text-left">Pickup Point</th>
+                            <th class="py-3 px-6 text-left">Number of Students</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for address in address_distribution %}
+                        <tr class="border-t table-row">
+                            <td class="py-3 px-6">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span class="font-medium">{{ address[0] }}</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-6">
+                                <span class="px-3 py-1 rounded-full bg-red-100 text-red-800 text-sm font-medium">
+                                    {{ address[1] }} students
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="text-center py-6 text-gray-500 text-sm mt-10">
+        <p>© 2024 Avanthi Student Transport System. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>
